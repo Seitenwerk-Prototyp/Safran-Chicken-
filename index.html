@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safran Chicken – Hähnchen &amp; Lieferservice Delmenhorst</title>
+  <meta name="description" content="Safran Chicken in Delmenhorst – frisch gebratenes Hähnchen, Burger, Wings und mehr. Jetzt online bestellen über Lieferando &amp; Uber Eats. Tel: 04221 9410871">
+  <meta name="theme-color" content="#1A1A1A">
+  <link rel="canonical" href="https://safranchicken-delmenhorst.de">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: '#FFB81C', 'fire-orange': '#F26522', 'chili-red': '#E03A1E' },
+          fontFamily: {
+            display: ['"Barlow Condensed"', 'sans-serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --gold:           #FFB81C;
+      --orange:         #F26522;
+      --red:            #E03A1E;
+      --bg:             #1A1A1A;
+      --surface:        #252525;
+      --surface-raised: #2E2E2E;
+      --text:           #F0EBE0;
+      --text-muted:     #8A8178;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* Scroll offset: desktop nav sits at top */
+    html { scroll-behavior: smooth; scroll-padding-top: 0; }
+    @media (min-width: 640px) { html { scroll-padding-top: 68px; } }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      /* Room for bottom nav on mobile */
+      padding-bottom: 82px;
+    }
+    @media (min-width: 640px) {
+      body { padding-bottom: 0; padding-top: 68px; }
+    }
+
+    /* ── Flame text ── */
+    .flame-text {
+      background: linear-gradient(90deg, #FFB81C 0%, #F26522 50%, #E03A1E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Animated word cycler (hero) ── */
+    #hero-cycler-word {
+      display: inline-block;
+      transition:
+        opacity   0.28s ease,
+        transform 0.32s ease;
+    }
+    #hero-cycler-word.hc-out {
+      opacity: 0;
+      transform: translateY(-18%);
+    }
+    #hero-cycler-word.hc-in {
+      opacity: 0;
+      transform: translateY(18%);
+    }
+
+    /* ══════════════════════════════════════════
+       FIXED LOGO (top-left, always visible)
+    ══════════════════════════════════════════ */
+    #site-logo-link {
+      position: fixed;
+      top: 8px;
+      left: 14px;
+      z-index: 200;
+      line-height: 0;
+      text-decoration: none;
+    }
+    @media (min-width: 640px) {
+      #site-logo-link { top: 11px; left: 18px; }
+    }
+    /* The logo image — forced square so border-radius:50% is a TRUE circle */
+    #site-logo-link img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;       /* crops rectangular PNG to fill the circle */
+      object-position: center;
+      display: block;
+      box-shadow: 0 0 0 2.5px rgba(255,255,255,0.85);
+    }
+    @media (min-width: 640px) {
+      #site-logo-link img { width: 46px; height: 46px; }
+    }
+    #site-logo-fallback {
+      display: none;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 0.8rem;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.04em;
+    }
+
+    /* ══════════════════════════════════════════
+       TUBELIGHT NAV
+       Mobile  (< 640px): fixed BOTTOM, icons
+       Desktop (≥ 640px): fixed TOP,    text
+    ══════════════════════════════════════════ */
+    #tubelight-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    @media (min-width: 640px) {
+      #tubelight-nav {
+        bottom: auto;
+        top: 12px;
+      }
+    }
+
+    .tl-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(20, 20, 20, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 9999px;
+      padding: 4px;
+      box-shadow: 0 4px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Sliding background indicator */
+    .tl-indicator {
+      position: absolute;
+      top: 4px; bottom: 4px;
+      border-radius: 9999px;
+      background: rgba(255, 184, 28, 0.13);
+      pointer-events: none;
+      z-index: 0;
+      /* Spring-like transition via cubic-bezier */
+      transition: left 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .tl-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding: 9px 14px;
+      transition: color 0.18s;
+      z-index: 1;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .tl-item:hover { color: var(--text); }
+    .tl-item.active { color: var(--gold); }
+
+    /* ── LAMP effect: glowing bar above active item ── */
+    .tl-item.active::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 3px 3px 0 0;
+      /* Glow radiates downward into the pill */
+      box-shadow:
+        0 3px  8px  3px rgba(255, 184, 28, 0.65),
+        0 6px 14px  6px rgba(255, 184, 28, 0.35),
+        0 10px 22px 8px rgba(255, 184, 28, 0.15);
+    }
+
+    /* Icon / text visibility */
+    .tl-text { display: none; }
+    .tl-icon { display: flex; line-height: 0; }
+    @media (min-width: 768px) {
+      .tl-text { display: inline; }
+      .tl-icon { display: none; }
+      .tl-item { padding: 9px 22px; }
+    }
+
+    /* ── Menu tab system ── */
+    .tabs-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+    .tabs-scroll::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none; border: none; cursor: pointer;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem; font-weight: 700;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      letter-spacing: 0.03em;
+      transition: background 0.1s, color 0.1s;
+    }
+    .tab-btn.active { background: var(--gold); color: #111111; }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .menu-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; padding: 13px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.1s;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover { background: rgba(255,184,28,0.04); }
+
+    .badge-spicy {
+      display: inline-block;
+      background: var(--red); color: #fff;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.08em; padding: 2px 6px;
+      text-transform: uppercase; vertical-align: middle; margin-left: 6px;
+    }
+
+    .card-img-placeholder {
+      width: 100%; height: 200px;
+      background: #2A1A00;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .card-img-placeholder.tall { height: 300px; }
+
+    /* Opening hours highlight */
+    .hours-row.today td:first-child { color: var(--gold); font-weight: 700; }
+    .hours-row.today td:last-child  { color: var(--gold); font-weight: 700; }
+    .hours-row.today td:first-child::after {
+      content: ' ◀ heute';
+      font-size: 0.65rem; color: var(--orange); font-weight: 600; margin-left: 6px;
+    }
+
+    /* Bestellen white-bg platform buttons */
+    .order-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      padding: 16px 28px;
+      background: #F5F0E8;
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+    .order-btn {
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+    .order-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      opacity: 0.92;
+    }
+
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    /* ── Button hover system ── */
+    .btn-cta {
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-cta:hover {
+      background: #c8311a !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(224,58,30,0.45);
+    }
+
+    .btn-outline-gold {
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .btn-outline-gold:hover {
+      background: var(--gold) !important;
+      color: #111 !important;
+      transform: translateY(-2px);
+    }
+    .btn-outline-gold:hover svg { stroke: #111; }
+
+    .btn-card-red {
+      transition: background 0.18s ease, transform 0.15s ease;
+    }
+    .btn-card-red:hover {
+      background: #c8311a !important;
+      transform: translateY(-2px);
+    }
+
+    .btn-card-gold {
+      transition: background 0.18s ease, transform 0.15s ease;
+    }
+    .btn-card-gold:hover {
+      background: #e6a518 !important;
+      transform: translateY(-2px);
+    }
+
+    .btn-card-dark {
+      transition: background 0.18s ease, color 0.18s ease, transform 0.15s ease;
+    }
+    .btn-card-dark:hover {
+      background: var(--gold) !important;
+      color: #111 !important;
+      transform: translateY(-2px);
+    }
+
+    /* ── Smoke animation ── */
+    @keyframes smoke-rise {
+      0%   { transform: translateY(0) translateX(0) scaleX(1) scaleY(0.5); opacity: 0; }
+      14%  { opacity: 0.45; }
+      55%  { transform: translateY(-22vh) translateX(calc(var(--smoke-drift, 18px) * 0.5)) scaleX(1.6) scaleY(1.2); opacity: 0.18; }
+      100% { transform: translateY(-42vh) translateX(var(--smoke-drift, 18px)) scaleX(2.4) scaleY(2.6); opacity: 0; }
+    }
+    .smoke-wisp {
+      position: absolute;
+      bottom: -20px;
+      border-radius: 40% 40% 50% 50% / 60% 60% 40% 40%;
+      background: radial-gradient(ellipse 60% 100% at 50% 80%,
+        rgba(160,110,55,0.28) 0%,
+        rgba(130,95,55,0.14) 45%,
+        transparent 70%);
+      filter: blur(22px);
+      pointer-events: none;
+      animation: smoke-rise var(--smoke-dur, 11s) ease-out infinite;
+      will-change: transform, opacity;
+      z-index: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+
+    a.link-muted { color: var(--text-muted); transition: color 0.15s; }
+    a.link-muted:hover { color: var(--text); }
+    a.link-gold { color: var(--gold); transition: color 0.15s; }
+    a.link-gold:hover { color: #ffd166; }
+  </style>
+</head>
+
+<body>
+
+<!-- ══ FIXED LOGO (top-left, always visible) ══ -->
+<a id="site-logo-link" href="#top" aria-label="Safran Chicken – Startseite">
+  <img src="./logo.png" alt="Safran Chicken" id="nav-logo-img">
+  <span id="site-logo-fallback">SC</span>
+</a>
+
+
+<!-- ══ TUBELIGHT NAV ══ -->
+<nav id="tubelight-nav" aria-label="Hauptnavigation">
+  <div class="tl-wrap">
+    <div class="tl-indicator" id="tl-indicator"></div>
+
+    <a class="tl-item active" href="#top" id="nav-home">
+      <span class="tl-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </span>
+      <span class="tl-text">Home</span>
+    </a>
+
+    <a class="tl-item" href="#speisekarte" id="nav-speisekarte">
+      <span class="tl-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+        </svg>
+      </span>
+      <span class="tl-text">Speisekarte</span>
+    </a>
+
+    <a class="tl-item" href="#bestellen" id="nav-bestellen">
+      <span class="tl-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" x2="21" y1="6" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+      </span>
+      <span class="tl-text">Bestellen</span>
+    </a>
+
+    <a class="tl-item" href="#standort" id="nav-standort">
+      <span class="tl-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+      </span>
+      <span class="tl-text">Standort</span>
+    </a>
+
+    <a class="tl-item" href="tel:042219410871" id="nav-call"
+       style="color:var(--gold)" aria-label="Anrufen">
+      <span class="tl-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.95 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.86 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 7.65a16 16 0 0 0 6.29 6.29l1.02-1.02a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </span>
+      <span class="tl-text">Anrufen</span>
+    </a>
+  </div>
+</nav>
+
+
+<!-- ══ HERO ══ -->
+<section id="top" class="relative min-h-screen flex flex-col justify-center overflow-hidden" style="padding-bottom:16vh">
+
+  <div class="absolute inset-0" style="background:#1A1A1A"></div>
+
+  <div class="absolute inset-0 overflow-hidden">
+    <img src="./hero.jpg" alt="" aria-hidden="true" loading="eager"
+         id="hero-img" class="w-full h-full object-cover"
+         style="opacity:0.28;object-position:center">
+  </div>
+
+  <div class="absolute inset-0 pointer-events-none"
+       style="background:linear-gradient(to top, rgba(26,26,26,1) 0%, rgba(26,26,26,0.55) 38%, transparent 68%)"></div>
+
+  <!-- Smoke wisps — rise from bottom, warm-tinted gray -->
+  <div class="smoke-wisp" style="left:3%;width:140px;height:140px;--smoke-dur:10.5s;--smoke-drift:-18px;animation-delay:0s"></div>
+  <div class="smoke-wisp" style="left:11%;width:100px;height:100px;--smoke-dur:8.8s;--smoke-drift:14px;animation-delay:1.4s"></div>
+  <div class="smoke-wisp" style="left:20%;width:220px;height:220px;--smoke-dur:14s;--smoke-drift:22px;animation-delay:0.5s"></div>
+  <div class="smoke-wisp" style="left:30%;width:130px;height:130px;--smoke-dur:11s;--smoke-drift:-16px;animation-delay:3.0s"></div>
+  <div class="smoke-wisp" style="left:40%;width:90px;height:90px;--smoke-dur:9s;--smoke-drift:10px;animation-delay:4.5s"></div>
+  <div class="smoke-wisp" style="left:49%;width:180px;height:180px;--smoke-dur:12.5s;--smoke-drift:-20px;animation-delay:1.8s"></div>
+  <div class="smoke-wisp" style="left:59%;width:160px;height:160px;--smoke-dur:11.8s;--smoke-drift:18px;animation-delay:0.9s"></div>
+  <div class="smoke-wisp" style="left:68%;width:110px;height:110px;--smoke-dur:10s;--smoke-drift:-12px;animation-delay:3.8s"></div>
+  <div class="smoke-wisp" style="left:77%;width:190px;height:190px;--smoke-dur:13s;--smoke-drift:24px;animation-delay:2.4s"></div>
+  <div class="smoke-wisp" style="left:87%;width:120px;height:120px;--smoke-dur:9.5s;--smoke-drift:-16px;animation-delay:5.2s"></div>
+  <div class="smoke-wisp" style="left:94%;width:100px;height:100px;--smoke-dur:8.5s;--smoke-drift:10px;animation-delay:1.0s"></div>
+
+  <!-- Decorative logo — tilted on desktop -->
+  <div class="absolute pointer-events-none hidden md:block"
+       style="top:6rem;right:4%;width:clamp(160px,24vw,280px);transform:rotate(4deg);z-index:5">
+    <img src="./logo.png" alt="" aria-hidden="true" id="hero-logo"
+         style="width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;object-position:center;opacity:0.88;display:block;box-shadow:0 0 0 2.5px rgba(255,255,255,0.85)">
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 sm:px-8 w-full text-center py-8" style="z-index:5">
+    <p class="text-xs font-bold tracking-widest uppercase mb-5" style="color:var(--orange)">
+      DELMENHORST MACHT HUNGER.
+    </p>
+
+    <h1 class="font-display font-black mb-5 mx-auto"
+        style="font-size:clamp(4rem,14vw,10rem);line-height:0.88;letter-spacing:-0.01em;max-width:780px">
+      SCHARF.<br>
+      <span id="hero-cycler-word" class="flame-text" aria-live="polite">SAFTIG.</span><br>
+      JETZT.
+    </h1>
+
+    <p class="mb-8 text-lg font-medium mx-auto" style="color:rgba(240,235,224,0.6);max-width:400px">
+      Heiß geliefert. Kein Kompromiss.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="#bestellen"
+         class="btn-cta inline-flex items-center justify-center font-bold text-white text-base px-8 py-4 tracking-widest"
+         style="background:var(--red);min-width:200px">
+        JETZT BESTELLEN
+      </a>
+      <a href="tel:042219410871"
+         class="btn-outline-gold inline-flex items-center justify-center gap-2 font-bold text-base px-8 py-4 border-2"
+         style="border-color:var(--gold);color:var(--gold);min-width:200px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.95 10a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.86 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 7.65a16 16 0 0 0 6.29 6.29l1.02-1.02a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        04221 9410871
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ HIGHLIGHTS ══ -->
+<section id="highlights" class="py-16 md:py-24" style="background:var(--surface)">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+
+    <h2 class="font-display font-black mb-12"
+        style="font-size:clamp(3rem,10vw,7rem);line-height:0.88;letter-spacing:-0.01em">
+      UNSERE HITS.
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 items-start">
+
+      <!-- Feature card: Spicy -->
+      <div style="background:var(--surface-raised);border-left:6px solid var(--red);overflow:hidden">
+        <div class="card-img-placeholder tall">
+          <img src="./menu-spicy.jpg" alt="Safran-Menü Spicy" class="w-full h-full object-cover" loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="p-6 md:p-8">
+          <div class="flex items-start justify-between mb-2">
+            <span class="text-xs font-bold tracking-widest uppercase" style="color:var(--orange)">SAFRAN-MENÜ</span>
+            <span class="badge-spicy">BELIEBT</span>
+          </div>
+          <h3 class="font-display font-black mb-2" style="font-size:clamp(2.5rem,6vw,4rem);line-height:0.88">SPICY</h3>
+          <p class="text-sm mb-6" style="color:var(--text-muted)">1/2 Hähnchen · Pommes Frites · Safran-Haussoße</p>
+          <div class="flex items-end justify-between gap-4">
+            <span class="font-display font-black" style="font-size:clamp(2.8rem,6vw,4.5rem);line-height:1;color:var(--gold)">13,90&nbsp;€</span>
+            <a href="#bestellen" class="btn-card-red text-sm font-bold px-5 py-3 text-white"
+               style="background:var(--red)">Bestellen</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right col: Classic + Royal -->
+      <div class="flex flex-col gap-4">
+
+        <div style="background:var(--surface-raised);overflow:hidden">
+          <div class="card-img-placeholder">
+            <img src="./menu-classic.jpg" alt="Safran-Menü Classic" class="w-full h-full object-cover" loading="lazy"
+                 onerror="this.style.display='none'">
+          </div>
+          <div class="p-5">
+            <span class="text-xs font-bold tracking-widest uppercase mb-1 block" style="color:var(--gold)">SAFRAN-MENÜ</span>
+            <h3 class="font-display font-black mb-1" style="font-size:2.2rem;line-height:0.88">CLASSIC</h3>
+            <p class="text-xs mb-3" style="color:var(--text-muted)">1/4 Hähnchen · Pommes · Haussoße</p>
+            <div class="flex items-center justify-between">
+              <span class="font-display font-black text-3xl" style="color:var(--gold)">9,90&nbsp;€</span>
+              <a href="#bestellen" class="btn-card-gold text-sm font-bold px-4 py-2"
+                 style="background:var(--gold);color:#111">Bestellen</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-raised);overflow:hidden">
+          <div class="card-img-placeholder">
+            <img src="./menu-royal.jpg" alt="Safran-Menü Royal" class="w-full h-full object-cover" loading="lazy"
+                 onerror="this.style.display='none'">
+          </div>
+          <div class="p-5">
+            <span class="text-xs font-bold tracking-widest uppercase mb-1 block" style="color:var(--text-muted)">SAFRAN-MENÜ</span>
+            <h3 class="font-display font-black mb-1" style="font-size:2.2rem;line-height:0.88">ROYAL</h3>
+            <p class="text-xs mb-3" style="color:var(--text-muted)">Ganzes Hähnchen · Pommes · 2 Soßen</p>
+            <div class="flex items-center justify-between">
+              <span class="font-display font-black text-3xl" style="color:var(--gold)">19,90&nbsp;€</span>
+              <a href="#bestellen" class="btn-card-dark text-sm font-bold px-4 py-2 text-white"
+                 style="background:var(--surface)">Bestellen</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ SPEISEKARTE ══ -->
+<section id="speisekarte" class="py-16 md:py-24" style="background:var(--bg);border-top:4px solid rgba(255,184,28,0.18)">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+
+    <h2 class="font-display font-black mb-10"
+        style="font-size:clamp(2.8rem,8vw,6rem);line-height:0.88;letter-spacing:-0.01em">
+      SPEISEKARTE
+    </h2>
+
+    <div class="tabs-scroll flex overflow-x-auto gap-1 mb-8 pb-px" style="border-bottom:2px solid rgba(255,255,255,0.07)">
+      <button class="tab-btn active" data-tab="safran-menus">Safran-Menüs</button>
+      <button class="tab-btn" data-tab="specials">Specials</button>
+      <button class="tab-btn" data-tab="burger">Burger</button>
+      <button class="tab-btn" data-tab="wraps">Wraps</button>
+      <button class="tab-btn" data-tab="wings">Wings</button>
+      <button class="tab-btn" data-tab="salate">Salate</button>
+      <button class="tab-btn" data-tab="snacks">Snacks &amp; Beilagen</button>
+      <button class="tab-btn" data-tab="saucen">Saucen</button>
+      <button class="tab-btn" data-tab="getraenke">Getränke</button>
+    </div>
+
+    <div id="panel-safran-menus" class="tab-panel active">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Safran-Menü Classic</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">1/4 Hähnchen · Pommes · Haussoße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">9,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Safran-Menü Spicy <span class="badge-spicy">Scharf</span></div><div class="text-xs mt-0.5" style="color:var(--text-muted)">1/2 Hähnchen · Pommes · Haussoße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">13,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Safran-Menü Royal</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Ganzes Hähnchen · Pommes · 2 Soßen</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">19,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Kinder-Menü</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Kleine Portion · Pommes · Soße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">7,50&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-specials" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Hähnchen-Box</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">4 Stück Wings · Pommes · Dip</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">10,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Crispy Tender Combo</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">5 Hähnchen-Streifen · Pommes · Soße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">11,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Family Box</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">8 Stück Wings · 2× Pommes · 2 Soßen</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">21,90&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-burger" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Chicken Burger Classic</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Hähnchenbrust · Salat · Tomate · Mayo</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">7,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Spicy Chicken Burger <span class="badge-spicy">Scharf</span></div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Hähnchenbrust · Jalapeños · Chipotle-Soße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">8,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Double Chicken Burger</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">2× Hähnchenbrust · Cheddar · Salat · Tomate</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">10,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Crispy Chicken Burger</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Knuspriges Filet · Coleslaw · Haussoße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">8,50&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-wraps" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Chicken Wrap</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Hähnchen · Salat · Tomate · Soße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">6,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Spicy Chicken Wrap <span class="badge-spicy">Scharf</span></div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Hähnchen · Jalapeños · Chili-Soße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">7,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Hähnchen-Döner-Wrap</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Hähnchen · Kraut · Zwiebeln · Knoblauchsoße</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">7,90&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-wings" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">6 Stück Wings</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Knusprige Hähnchenflügel · Dip</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">6,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">12 Stück Wings</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Knusprige Hähnchenflügel · 2 Dips</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">11,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">20 Stück Wings</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Knusprige Hähnchenflügel · 3 Dips · Pommes</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">17,90&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-salate" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Griechischer Salat</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Feta · Oliven · Gurke · Tomate · Paprika</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">6,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Caesar Salad mit Hähnchen</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Romana · Parmesan · Croutons · Caesar-Dressing</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">8,90&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Gemischter Salat</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Saisonales Gemüse · Hausvinaigrette</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">5,90&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-snacks" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div class="font-display font-bold text-lg">Pommes Frites</div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">3,00&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Wedges</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Ofenkartoffeln mit Gewürzen</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">3,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Onion Rings</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">6 Stück · knusprig frittiert</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">3,50&nbsp;€</span></div>
+          <div class="menu-item"><div class="font-display font-bold text-lg">Maiskolben</div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Coleslaw</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">Hausrezept Krautsalat</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Chicken Nuggets</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">6 Stück · mit Dip</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">4,90&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-saucen" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Safran-Soße <span style="font-size:0.7rem;font-weight:700;color:var(--orange);margin-left:6px">HAUSREZEPT ★</span></div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">1,00&nbsp;€</span></div>
+          <div class="menu-item"><div class="font-display font-bold text-lg">BBQ-Soße</div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">0,80&nbsp;€</span></div>
+          <div class="menu-item"><div class="font-display font-bold text-lg">Knoblauchsoße</div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">0,80&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Chili-Soße <span class="badge-spicy">Scharf</span></div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">0,80&nbsp;€</span></div>
+          <div class="menu-item"><div class="font-display font-bold text-lg">Ketchup</div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">0,50&nbsp;€</span></div>
+          <div class="menu-item"><div class="font-display font-bold text-lg">Mayonnaise</div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">0,50&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-getraenke" class="tab-panel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style="background:var(--surface)">
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Coca-Cola</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,4 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Fanta</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,4 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Sprite</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,4 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Apfelschorle</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,4 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,50&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Wasser still</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,5 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,00&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Wasser sprudelnd</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,5 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,00&nbsp;€</span></div>
+          <div class="menu-item"><div><div class="font-display font-bold text-lg">Ayran</div><div class="text-xs mt-0.5" style="color:var(--text-muted)">0,3 l</div></div><span class="font-display font-black text-2xl flex-shrink-0" style="color:var(--gold)">2,00&nbsp;€</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <p class="text-xs mb-4" style="color:var(--text-muted)">Alle Preise inkl. MwSt. · Liefergebühren können variieren.</p>
+      <a href="#bestellen"
+         class="inline-flex items-center font-bold text-white text-sm px-8 py-4 tracking-widest"
+         style="background:var(--red)">
+        JETZT ONLINE BESTELLEN
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ BESTELLEN ══ -->
+<section id="bestellen" class="py-20 md:py-28" style="background:var(--red)">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+
+    <h2 class="font-display font-black mb-4"
+        style="font-size:clamp(3.5rem,12vw,8rem);line-height:1.05;letter-spacing:-0.01em;color:#F5F0E8;overflow:visible">
+      HUNGER.<br>GELÖST.
+    </h2>
+    <p class="text-xl font-medium mb-10" style="color:rgba(245,240,232,0.72)">
+      Kein Bock zu kochen. Wir liefern.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 mb-14 flex-wrap">
+      <a href="https://www.lieferando.de" target="_blank" rel="noopener noreferrer"
+         class="order-btn" style="color:#CC6600;border-left:5px solid #FF8000">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <circle cx="13" cy="13" r="13" fill="#FF8000"/>
+          <path d="M7 13C7 9.7 9.7 7 13 7S19 9.7 19 13 16.3 19 13 19 7 16.3 7 13Z" fill="white"/>
+        </svg>
+        <span class="font-bold text-base">Lieferando</span>
+      </a>
+      <a href="https://www.ubereats.com/de" target="_blank" rel="noopener noreferrer"
+         class="order-btn" style="color:#057a40;border-left:5px solid #06C167">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <circle cx="13" cy="13" r="13" fill="#06C167"/>
+          <path d="M8 13h10M13 8l5 5-5 5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="font-bold text-base">Uber Eats</span>
+      </a>
+    </div>
+
+    <div style="border-top:1px solid rgba(245,240,232,0.22);padding-top:2rem">
+      <p class="text-xs font-bold tracking-widest uppercase mb-3" style="color:rgba(245,240,232,0.55)">
+        ODER DIREKT ANRUFEN
+      </p>
+      <a href="tel:042219410871"
+         class="font-display font-black"
+         style="font-size:clamp(2.2rem,7vw,4.5rem);line-height:1;color:#F5F0E8;display:inline-block;letter-spacing:-0.01em;transition:opacity 0.18s,transform 0.18s"
+         onmouseover="this.style.opacity='0.75';this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'">
+        04221 9410871
+      </a>
+      <p class="mt-2 text-sm" style="color:rgba(245,240,232,0.55)">Ruf direkt an — wir heben ab.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ STANDORT & ÖFFNUNGSZEITEN ══ -->
+<section id="standort" class="py-16 md:py-24" style="background:var(--bg)">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+
+    <h2 class="font-display font-black mb-10"
+        style="font-size:clamp(2.8rem,8vw,6rem);line-height:0.88;letter-spacing:-0.01em">
+      FINDE UNS.
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+      <div style="overflow:hidden;line-height:0">
+        <iframe
+          src="https://maps.google.com/maps?q=D%C3%BCsternortstra%C3%9Fe+42%2C+27755+Delmenhorst&output=embed"
+          width="100%" height="420"
+          style="border:none;display:block;filter:grayscale(20%) contrast(1.1)"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Safran Chicken – Düsternortstraße 42, 27755 Delmenhorst">
+        </iframe>
+      </div>
+
+      <div class="flex flex-col gap-8">
+
+        <div>
+          <p class="text-xs font-bold tracking-widest uppercase mb-3" style="color:var(--orange)">ADRESSE</p>
+          <p class="font-display font-black leading-tight mb-3"
+             style="font-size:clamp(1.8rem,4vw,2.8rem)">
+            Düsternortstraße 42<br>27755 Delmenhorst
+          </p>
+          <a href="https://maps.google.com/maps?q=D%C3%BCsternortstra%C3%9Fe+42%2C+27755+Delmenhorst"
+             target="_blank" rel="noopener noreferrer"
+             class="link-gold inline-flex items-center gap-1 text-sm font-semibold">
+            In Google Maps öffnen →
+          </a>
+        </div>
+
+        <div>
+          <p class="text-xs font-bold tracking-widest uppercase mb-4" style="color:var(--orange)">ÖFFNUNGSZEITEN</p>
+          <table class="w-full" style="border-collapse:collapse">
+            <tbody>
+              <tr class="hours-row" data-days="1,2,3,4" style="border-bottom:1px solid rgba(255,184,28,0.15)">
+                <td class="py-3 pr-6 font-semibold">Mo – Do</td>
+                <td class="py-3 text-right font-semibold">11:30 – 22:00 Uhr</td>
+              </tr>
+              <tr class="hours-row" data-days="5" style="border-bottom:1px solid rgba(255,184,28,0.15)">
+                <td class="py-3 pr-6 font-semibold">Fr</td>
+                <td class="py-3 text-right font-semibold">11:30 – 00:00 Uhr</td>
+              </tr>
+              <tr class="hours-row" data-days="6" style="border-bottom:1px solid rgba(255,184,28,0.15)">
+                <td class="py-3 pr-6 font-semibold">Sa</td>
+                <td class="py-3 text-right font-semibold">13:00 – 00:00 Uhr</td>
+              </tr>
+              <tr class="hours-row" data-days="0">
+                <td class="py-3 pr-6 font-semibold">So</td>
+                <td class="py-3 text-right font-semibold">13:00 – 22:00 Uhr</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <a href="tel:042219410871" class="inline-flex items-center gap-4 hover:opacity-80 transition-opacity">
+          <div>
+            <p class="text-xs font-bold tracking-widest uppercase mb-0.5" style="color:var(--text-muted)">TELEFON</p>
+            <p class="font-display font-black text-3xl" style="color:var(--gold)">04221 9410871</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<footer style="background:#111111;border-top:4px solid var(--gold)">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 py-12">
+
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-8 mb-10">
+
+      <div>
+        <!-- Footer logo — also a true circle -->
+        <img src="./logo.png" alt="Safran Chicken"
+             style="width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:center;display:block;margin-bottom:1rem"
+             id="footer-logo"
+             onerror="this.style.display='none';document.getElementById('footer-logo-text').style.display='block'">
+        <span class="font-display font-black text-2xl flame-text" id="footer-logo-text" style="display:none">SAFRAN CHICKEN</span>
+        <p class="text-base font-medium mt-1" style="color:var(--text-muted)">Der schärfste Laden in Delmenhorst.</p>
+      </div>
+
+      <div>
+        <h4 class="font-display font-bold text-lg tracking-wide mb-4">KONTAKT</h4>
+        <div class="flex flex-col gap-2.5 text-sm" style="color:var(--text-muted)">
+          <p>Düsternortstraße 42<br>27755 Delmenhorst</p>
+          <a href="tel:042219410871" class="link-gold font-semibold">04221 9410871</a>
+          <a href="https://www.instagram.com/safranchicken_delmenhorst" target="_blank" rel="noopener noreferrer"
+             class="link-muted flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            @safranchicken_delmenhorst
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-display font-bold text-lg tracking-wide mb-4">RECHTLICHES</h4>
+        <div class="flex flex-col gap-2.5 text-sm">
+          <a href="#impressum" class="link-muted">Impressum</a>
+          <a href="#datenschutz" class="link-muted">Datenschutzerklärung</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-2 pt-6 border-t text-xs"
+         style="border-color:rgba(255,255,255,0.06);color:var(--text-muted)">
+      <span>© 2024 Safran Chicken Delmenhorst. Alle Rechte vorbehalten.</span>
+      <span>Düsternortstraße 42 · 27755 Delmenhorst</span>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  /* ══════════════════════════════════════════
+     TUBELIGHT NAV — sliding indicator + lamp
+  ══════════════════════════════════════════ */
+  const tlIndicator = document.getElementById('tl-indicator');
+  const tlWrap = document.querySelector('.tl-wrap');
+
+  function moveTLIndicator(item) {
+    if (!item || !tlWrap) return;
+    const wrapRect = tlWrap.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    tlIndicator.style.left  = (itemRect.left - wrapRect.left) + 'px';
+    tlIndicator.style.width = itemRect.width + 'px';
+  }
+
+  function setTLActive(item) {
+    document.querySelectorAll('.tl-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    moveTLIndicator(item);
+  }
+
+  // Click handler — only for anchor items (not tel: link)
+  document.querySelectorAll('.tl-item[href^="#"]').forEach(item => {
+    item.addEventListener('click', () => setTLActive(item));
+  });
+
+  // Scroll-spy: update active item based on visible section
+  const tlSections = [
+    { id: 'standort',    navId: 'nav-standort'    },
+    { id: 'bestellen',   navId: 'nav-bestellen'   },
+    { id: 'speisekarte', navId: 'nav-speisekarte' },
+    { id: 'top',         navId: 'nav-home'        },
+  ];
+
+  function updateTLScroll() {
+    const y = window.scrollY + 120;
+    let current = 'nav-home';
+    for (const s of tlSections) {
+      const el = document.getElementById(s.id);
+      if (el && y >= el.offsetTop) { current = s.navId; break; }
+    }
+    const active = document.getElementById(current);
+    if (active && !active.classList.contains('active')) setTLActive(active);
+  }
+
+  window.addEventListener('scroll', updateTLScroll, { passive: true });
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('.tl-item.active');
+    if (active) moveTLIndicator(active);
+  });
+
+  // Initial indicator position (after layout)
+  window.addEventListener('load', () => {
+    const first = document.querySelector('.tl-item.active');
+    if (first) moveTLIndicator(first);
+  });
+  // Fallback for CDN-loaded pages
+  setTimeout(() => {
+    const first = document.querySelector('.tl-item.active');
+    if (first) moveTLIndicator(first);
+  }, 200);
+
+  /* ══════════════════════════════════════════
+     LOGO fallback
+  ══════════════════════════════════════════ */
+  const navLogoImg = document.getElementById('nav-logo-img');
+  if (navLogoImg) {
+    navLogoImg.addEventListener('error', () => {
+      navLogoImg.style.display = 'none';
+      const fb = document.getElementById('site-logo-fallback');
+      if (fb) fb.style.display = 'flex';
+    });
+  }
+
+  const heroLogoImg = document.getElementById('hero-logo');
+  if (heroLogoImg) {
+    heroLogoImg.addEventListener('error', () => {
+      heroLogoImg.parentElement.style.display = 'none';
+    });
+  }
+
+  /* ══════════════════════════════════════════
+     HERO WORD CYCLER
+     Single element swap: fade+slide out upward,
+     swap text, fade+slide in from below.
+  ══════════════════════════════════════════ */
+  (function () {
+    const el = document.getElementById('hero-cycler-word');
+    if (!el) return;
+    const words = ['SAFTIG.', 'FEURIG.', 'KNUSPRIG.', 'HEISS.', 'FRISCH.'];
+    let i = 0;
+
+    setInterval(() => {
+      el.classList.add('hc-out');
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('hc-out');
+        el.classList.add('hc-in');
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          el.classList.remove('hc-in');
+        }));
+      }, 300);
+    }, 2400);
+  })();
+
+  /* ══════════════════════════════════════════
+     MENU TABS
+  ══════════════════════════════════════════ */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById('panel-' + btn.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  /* ══════════════════════════════════════════
+     ÖFFNUNGSZEITEN — heutigen Tag hervorheben
+  ══════════════════════════════════════════ */
+  const today = new Date().getDay();
+  document.querySelectorAll('.hours-row').forEach(row => {
+    const days = row.getAttribute('data-days').split(',').map(Number);
+    if (days.includes(today)) row.classList.add('today');
+  });
+</script>
+
+</body>
+</html>
